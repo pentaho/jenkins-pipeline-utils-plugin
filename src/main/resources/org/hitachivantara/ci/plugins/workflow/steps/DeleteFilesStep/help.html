@@ -1,0 +1,37 @@
+<div>
+  <p>
+    Deletes files or folders from the workspace.
+  </p>
+  <strong>Fields:</strong>
+  <ul>
+    <li>
+      <code>path</code>:
+      Path to the file or folder, relative or absolute.
+    </li>
+    <li>
+      <code>regex</code>:
+      Regular expression to match for files or directories to delete starting in the current folder.
+    </li>
+    <li>
+      <code>async</code>:
+      Perform deletion asynchronously. Only available for paths. Defaults to false.
+    </li>
+  </ul>
+  <strong>Example:</strong><br/>
+  <code>
+    <pre>
+node {
+  delete(path: 'path/to/dir', async: true)
+
+  dir('path/to/search') {
+    delete(regex: '.*txt')
+  }
+
+  // if no path or regex are provided the current directory is considered
+  dir('dir/to/delete'){
+    delete(async: true)
+  }
+}
+    </pre>
+  </code>
+</div>

@@ -1,0 +1,29 @@
+<div>
+  <p>
+    Process a Maven Project file. The returned  object is a MavenModule.
+  </p>
+  <strong>Fields:</strong>
+  <ul>
+    <li>
+      <code>file</code>:
+      File to read.
+    </li>
+    <li>
+      <code>activeProfiles</code>:
+      Optional: List of profile ids.
+    </li>
+    <li>
+      <code>userProperties</code>:
+      Optional: Properties object.
+    </li>
+  </ul>
+  <strong>Example:</strong><br/>
+  <code>
+    <pre>
+node {
+  MavenModule x = buildMavenModule file: 'pom.xml'
+  assert x.id == 'com.pentaho.example:multimodule-parent'
+}
+    </pre>
+  </code>
+</div>

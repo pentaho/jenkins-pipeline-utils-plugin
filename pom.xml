@@ -1,0 +1,470 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.jenkins-ci.plugins</groupId>
+    <artifactId>plugin</artifactId>
+    <version>3.43</version>
+    <relativePath />
+  </parent>
+  <groupId>org.hitachivantara.ci.plugins</groupId>
+  <artifactId>pipeline-ci-utility-steps</artifactId>
+  <version>1.21-SNAPSHOT</version>
+  <packaging>hpi</packaging>
+
+  <name>Hitachi Vantara Pipeline Utility Steps</name>
+  <description>Utility steps to manage pipeline builds</description>
+
+  <scm>
+    <developerConnection>scm:git:git@github.com:pentaho/pentaho-jenkins-pipeline-utils-plugin.git</developerConnection>
+    <tag>HEAD</tag>
+  </scm>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <java.level>8</java.level>
+
+    <jenkins.version>2.164.1</jenkins.version>
+    <maven.version>3.6.0</maven.version>
+    <gmavenplus-plugin.version>1.6.1</gmavenplus-plugin.version>
+    <groovy-all.version>2.5.0</groovy-all.version>
+
+    <!-- plugin dependencies -->
+    <workflow-api.version>2.33</workflow-api.version>                               <!-- Pipeline: API -->
+    <workflow-support.version>3.2</workflow-support.version>                        <!-- Pipeline: Supporting APIs -->
+    <workflow-cps.version>2.64</workflow-cps.version>                               <!-- Pipeline: Groovy -->
+    <workflow-cps-global-lib.version>2.13</workflow-cps-global-lib.version>         <!-- Pipeline: Shared Groovy Libraries -->
+    <workflow-step-api.version>2.19</workflow-step-api.version>                     <!-- Pipeline: Step API -->
+    <workflow-job.version>2.31</workflow-job.version>                               <!-- Pipeline: Job -->
+    <workflow-multibranch.version>2.20</workflow-multibranch.version>               <!-- Pipeline: Multibranch -->
+    <scm-api.version>2.2.7</scm-api.version>                                        <!-- SCM API Plugin -->
+    <cloudbees-folder.version>6.3</cloudbees-folder.version>                        <!-- Folders Plugin -->
+    <script-security.version>1.54</script-security.version>                         <!-- Script Security Plugin -->
+    <resource-disposer.version>0.12</resource-disposer.version>                     <!-- Resource Disposer Plugin -->
+    <github-branch-source.version>2.4.1</github-branch-source.version>              <!-- GitHub Branch Source Plugin -->
+    <inline-pipeline.version>1.0</inline-pipeline.version>                          <!-- Multibranch Pipeline Inline Definition Plugin -->
+    <scm-filter-branch-pr.version>0.4</scm-filter-branch-pr.version>                <!-- SCM Filter Branch PR Plugin -->
+    <credentials-binding.version>1.19</credentials-binding.version>                 <!-- Credentials Binding Plugin -->
+
+    <pentaho.private.release.repo>http://nexus.pentaho.org/content/repositories/private-release/</pentaho.private.release.repo>
+    <pentaho.private.snapshot.repo>http://nexus.pentaho.org/content/repositories/private-snapshot/</pentaho.private.snapshot.repo>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.jenkins-ci.plugins.workflow</groupId>
+      <artifactId>workflow-step-api</artifactId>
+      <version>${workflow-step-api.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.jenkins-ci.plugins</groupId>
+      <artifactId>script-security</artifactId>
+      <version>${script-security.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.jenkins-ci.plugins</groupId>
+      <artifactId>resource-disposer</artifactId>
+      <version>${resource-disposer.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.jenkins-ci.plugins.workflow</groupId>
+      <artifactId>workflow-job</artifactId>
+      <version>${workflow-job.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.jenkins-ci.plugins.workflow</groupId>
+      <artifactId>workflow-cps</artifactId>
+      <version>${workflow-cps.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.jenkins-ci.plugins</groupId>
+      <artifactId>cloudbees-folder</artifactId>
+      <version>${cloudbees-folder.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.jenkins-ci.plugins.workflow</groupId>
+      <artifactId>workflow-api</artifactId>
+      <version>${workflow-api.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.jenkins-ci.plugins.workflow</groupId>
+      <artifactId>workflow-support</artifactId>
+      <version>${workflow-support.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.jenkins-ci.plugins.workflow</groupId>
+      <artifactId>workflow-multibranch</artifactId>
+      <version>${workflow-multibranch.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.jenkins-ci.plugins</groupId>
+      <artifactId>github-branch-source</artifactId>
+      <version>${github-branch-source.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.jenkins-ci.plugins</groupId>
+      <artifactId>scm-api</artifactId>
+      <version>${scm-api.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.jenkins-ci.plugins</groupId>
+      <artifactId>scm-filter-branch-pr</artifactId>
+      <version>${scm-filter-branch-pr.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.jenkins-ci.plugins</groupId>
+      <artifactId>inline-pipeline</artifactId>
+      <version>${inline-pipeline.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.jenkins-ci.plugins</groupId>
+      <artifactId>credentials-binding</artifactId>
+      <version>${credentials-binding.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.jenkins-ci.plugins</groupId>
+      <artifactId>ssh-credentials</artifactId>
+      <version>1.13</version>
+    </dependency>
+
+    <!-- Enforcer complaints about transitive versions, review whenever updating plugin versions -->
+    <dependency>
+      <groupId>com.infradna.tool</groupId>
+      <artifactId>bridge-method-annotation</artifactId>
+      <version>1.17</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jenkins-ci</groupId>
+      <artifactId>annotation-indexer</artifactId>
+      <version>1.12</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>1.7.26</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <!-- Other Dependencies -->
+    <dependency>
+      <groupId>commons-cli</groupId>
+      <artifactId>commons-cli</artifactId>
+      <version>1.4</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+      <version>3.8.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.maven</groupId>
+      <artifactId>maven-core</artifactId>
+      <version>${maven.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>*</groupId>
+          <artifactId>*</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.maven</groupId>
+      <artifactId>maven-model</artifactId>
+      <version>${maven.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.maven</groupId>
+      <artifactId>maven-model-builder</artifactId>
+      <version>${maven.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.codehaus.plexus</groupId>
+          <artifactId>plexus-component-annotations</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>com.google.guava</groupId>
+          <artifactId>guava</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.maven</groupId>
+      <artifactId>maven-embedder</artifactId>
+      <version>${maven.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>*</groupId>
+          <artifactId>maven-repository-metadata</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>*</groupId>
+          <artifactId>maven-resolver-provider</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>*</groupId>
+          <artifactId>maven-settings-builder</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>*</groupId>
+          <artifactId>maven-settings</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>*</groupId>
+          <artifactId>maven-plugin-api</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>*</groupId>
+          <artifactId>maven-shared-utils</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>*</groupId>
+          <artifactId>maven-resolver-impl</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>*</groupId>
+          <artifactId>maven-resolver-spi</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>*</groupId>
+          <artifactId>maven-resolver-util</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>*</groupId>
+          <artifactId>guice</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>*</groupId>
+          <artifactId>guava</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>*</groupId>
+          <artifactId>jsr250-api</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>*</groupId>
+          <artifactId>org.eclipse.sisu.plexus</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>*</groupId>
+          <artifactId>org.eclipse.sisu.inject</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>javax.inject</groupId>
+          <artifactId>javax.inject</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>*</groupId>
+          <artifactId>plexus-component-annotations</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>*</groupId>
+          <artifactId>plexus-sec-dispatcher</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>*</groupId>
+          <artifactId>plexus-cipher</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.velocity</groupId>
+      <artifactId>velocity-engine-core</artifactId>
+      <version>2.1</version>
+    </dependency>
+
+    <!-- Test Dependencies -->
+    <dependency>
+      <groupId>org.jenkins-ci.plugins.workflow</groupId>
+      <artifactId>workflow-basic-steps</artifactId>
+      <version>2.13</version>
+      <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>*</groupId>
+          <artifactId>*</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.jenkins-ci.plugins</groupId>
+      <artifactId>apache-httpcomponents-client-4-api</artifactId>
+      <version>4.5.5-3.0</version>
+      <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>*</groupId>
+          <artifactId>*</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.jenkins-ci.plugins.workflow</groupId>
+      <artifactId>workflow-durable-task-step</artifactId>
+      <version>2.27</version>
+      <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>*</groupId>
+          <artifactId>*</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.jenkins-ci.plugins</groupId>
+      <artifactId>durable-task</artifactId>
+      <version>1.26</version>
+      <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>*</groupId>
+          <artifactId>*</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.jenkins-ci.plugins</groupId>
+      <artifactId>token-macro</artifactId>
+      <version>1.12.1</version>
+      <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>*</groupId>
+          <artifactId>*</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.jenkins-ci.plugins</groupId>
+      <artifactId>scm-api</artifactId>
+      <version>${scm-api.version}</version>
+      <classifier>tests</classifier>
+      <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>*</groupId>
+          <artifactId>*</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
+    <!-- Test support dependencies -->
+    <dependency>
+      <groupId>org.spockframework</groupId>
+      <artifactId>spock-core</artifactId>
+      <version>1.1-groovy-2.4</version>
+      <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>org.codehaus.groovy</groupId>
+          <artifactId>groovy-all</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>cglib</groupId>
+      <artifactId>cglib-nodep</artifactId>
+      <version>3.2.11</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <repositories>
+    <repository>
+      <id>pentaho-public</id>
+      <name>Pentaho Public</name>
+      <url>http://nexus.pentaho.org/content/groups/omni/</url>
+      <releases>
+        <enabled>true</enabled>
+        <updatePolicy>daily</updatePolicy>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+        <updatePolicy>interval:15</updatePolicy>
+      </snapshots>
+    </repository>
+  </repositories>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.gmaven</groupId>
+        <artifactId>gmaven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>test-in-groovy</id>
+            <phase>none</phase>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <configuration>
+          <excludes>
+            <exclude>**/Messages.class</exclude>
+            <exclude>**/*$*_closure*</exclude>
+          </excludes>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.gmavenplus</groupId>
+        <artifactId>gmavenplus-plugin</artifactId>
+        <version>${gmavenplus-plugin.version}</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>addSources</goal>
+              <goal>addTestSources</goal>
+              <goal>generateStubs</goal>
+              <goal>compile</goal>
+              <goal>compileTests</goal>
+              <goal>removeStubs</goal>
+            </goals>
+          </execution>
+        </executions>
+        <dependencies>
+          <dependency>
+            <groupId>org.codehaus.groovy</groupId>
+            <artifactId>groovy-all</artifactId>
+            <!-- any version of Groovy \>= 1.5.0 should work here -->
+            <version>${groovy-all.version}</version>
+            <type>pom</type>
+            <scope>runtime</scope>
+          </dependency>
+        </dependencies>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-site-plugin</artifactId>
+        <version>3.3</version>
+        <configuration>
+          <skip>true</skip>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.jenkins-ci.tools</groupId>
+        <artifactId>maven-hpi-plugin</artifactId>
+        <configuration>
+          <pluginFirstClassLoader>true</pluginFirstClassLoader>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+  <distributionManagement>
+    <repository>
+      <id>pentaho.private.release.repo</id>
+      <name>Pentaho Private Release Repository</name>
+      <url>${pentaho.private.release.repo}</url>
+    </repository>
+    <snapshotRepository>
+      <id>pentaho.private.snapshot.repo</id>
+      <name>Pentaho Private Snapshot Repository</name>
+      <url>${pentaho.private.snapshot.repo}</url>
+    </snapshotRepository>
+  </distributionManagement>
+
+</project>

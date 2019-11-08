@@ -1,0 +1,43 @@
+<div>
+  <p>
+    Retrieves the changelog between branches, commits, tags and SHAs
+  </p>
+  <strong>Fields:</strong>
+  <ul>
+    <li>
+      <code>credentialsId</code>:
+      ID by which the credentials are identified.
+    </li>
+    <li>
+      <code>repository</code>:
+      Repository to connect to. Should be in the 'owner/repoName' format (example: 'pentaho/pentaho-kettle')
+    </li>
+    <li>
+      <code>name</code>:
+      The name of the release.
+    </li>
+    <li>
+      <code>text</code>:
+      The body text for the release.
+    </li>
+    <li>
+      <code>update</code>:
+      Whether a release should be recreated if another release with the same name already exists. Defaults to <b>'true'</b>
+    </li>
+  </ul>
+  <strong>Example:</strong><br/>
+  <code>
+    <pre>
+node {
+  Boolean saved =
+      createGithubRelease(
+        credentials: 'jenkinsCredentialsId',
+        repository: 'pentaho/pentaho-kettle'
+        name: 'release-name',
+        text: 'release-text',
+        update: true
+      )
+}
+    </pre>
+  </code>
+</div>

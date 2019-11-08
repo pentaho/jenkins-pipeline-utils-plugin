@@ -1,0 +1,26 @@
+<div>
+  <p>
+    Provides a sub view of another dependency graph.
+  </p>
+  <strong>Fields:</strong>
+  <ul>
+    <li>
+      <code>module</code>:
+      MavenModule instance
+    </li>
+    <li>
+      <code>whiteList</code>:
+      List of projects to filter
+    </li>
+  </ul>
+  <strong>Example:</strong><br/>
+  <code>
+    <pre>
+node {
+  def m = buildMavenModule file: 'pom.xml'
+  def p = filterProjectGraph module: m
+  assert p == [[sub-1, sub-4], [sub-2], [sub-5, sub-3]]
+}
+    </pre>
+  </code>
+</div>

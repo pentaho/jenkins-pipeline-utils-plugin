@@ -1,0 +1,23 @@
+<div>
+  <p>
+    Instantiates a new CommandBuilder for command line parsing.
+  </p>
+  <strong>Fields:</strong>
+  <ul>
+    <li>
+      <code>options</code>:
+      Default options to add to the command line.
+    </li>
+  </ul>
+  <strong>Example:</strong><br/>
+  <code>
+    <pre>
+node {
+  def cmd = getMavenCommandBuilder()
+  cmd << 'clean install'
+  cmd << '-DskipTests'
+  assert cmd.build() == 'mvn clean install -DskipTests'
+}
+    </pre>
+  </code>
+</div>

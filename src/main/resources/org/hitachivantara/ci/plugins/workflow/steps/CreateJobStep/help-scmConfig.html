@@ -1,0 +1,38 @@
+<p>
+  SCM additional configurations, used to define extra behaviour on multibranch jobs
+</p>
+<strong>Fields:</strong>
+<ul>
+  <li>
+    <code>organization</code>: String
+    <p>Git organization</p>
+  </li>
+  <li>
+    <code>repository</code>: String
+    <p>Git repository</p>
+  </li>
+  <li>
+    <code>branches</code>: String
+    <p>Wildcard space separated git branch names to build and scan for Pull Requests that target them</p>
+  </li>
+  <li>
+    <code>markerFile</code>: String
+    <p>Marker file that makes a branch eligible to be built</p>
+  </li>
+  <li>
+    <code>scanInterval</code>: int
+    <p>Branch periodic scan interval in minutes</p>
+  </li>
+  <li>
+    <code>prReportStatus</code>: boolean
+    <p>Define if the Pull Request build status should be reported to Github</p>
+  </li>
+  <li>
+    <code>prScan</code>: boolean
+    <p>Define if Pull Requests are to be scanned</p>
+  </li>
+  <li>
+    <code>prMerge</code>: boolean
+    <p>Define if the Pull Request should be merged with the target branch before built</p>
+  </li>
+</ul>

@@ -1,0 +1,42 @@
+<div>
+  <p>
+    Generates a string based on a given Velocity template.
+  </p>
+  <strong>Fields:</strong>
+  <ul>
+    <li>
+      <code>file</code>:
+      Path to the template file.
+    </li>
+    <li>
+      <code>encoding</code>:
+      The encoding to use when reading the template file.
+    </li>
+    <li>
+      <code>text</code>:
+      A string containing the template to be used. This can be used instead of a file template.
+    </li>
+    <li>
+      <code>parameters</code>:
+      Parameters needed to be passed to the Velocity engine when resolving the template.
+    </li>
+  </ul>
+  <strong>Example:</strong><br/>
+  <code>
+    <pre>
+node {
+  def resolvedString = resolveTemplate(
+    file: '/path/to/the/template.vm',
+    parameters: [ some: 'thing'])
+  echo resolvedString
+}
+
+node {
+  def resolvedString = resolveTemplate(
+    text: 'A template string for some${some}',
+    parameters: [ some: 'thing'])
+  echo resolvedString
+}
+    </pre>
+  </code>
+</div>

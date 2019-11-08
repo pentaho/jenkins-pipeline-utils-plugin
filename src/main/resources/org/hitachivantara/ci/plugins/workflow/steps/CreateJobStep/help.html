@@ -1,0 +1,41 @@
+<div>
+  <p>
+    Creates pipeline jobs in the current jenkins instance.
+  </p>
+  <strong>Example:</strong><br/>
+  <code>
+    <pre>
+node {
+  createJob('myJob')
+
+  createJob(
+    name: 'myJob',
+    folder: 'the/job/folder',
+    script: "echo 'something'"
+  )
+
+  createJob(
+    name: 'myJob',
+    multibranch: true,
+    scmConfig: [
+      organization: 'org',
+      repository: 'repo',
+      branches: 'master',
+      scanInterval: 10
+    ]
+  )
+
+  createJob(
+    name: 'myJob',
+    multibranch: true,
+    script: "echo 'something'",
+    scmConfig: [
+      markerFile: '.build-me',
+      prScan: true,
+      prReportStatus: true
+    ]
+  )
+}
+    </pre>
+  </code>
+</div>
