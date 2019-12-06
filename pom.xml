@@ -17,6 +17,7 @@
 
   <scm>
     <developerConnection>scm:git:git@github.com:pentaho/pentaho-jenkins-pipeline-utils-plugin.git</developerConnection>
+    <url>https://github.com/pentaho/pentaho-jenkins-pipeline-utils-plugin</url>
     <tag>HEAD</tag>
   </scm>
 
@@ -46,8 +47,9 @@
     <scm-filter-branch-pr.version>0.4</scm-filter-branch-pr.version>                <!-- SCM Filter Branch PR Plugin -->
     <credentials-binding.version>1.19</credentials-binding.version>                 <!-- Credentials Binding Plugin -->
 
-    <pentaho.private.release.repo>http://nexus.pentaho.org/content/repositories/private-release/</pentaho.private.release.repo>
-    <pentaho.private.snapshot.repo>http://nexus.pentaho.org/content/repositories/private-snapshot/</pentaho.private.snapshot.repo>
+    <!-- No default repository URL deployments, these must be defined at build-time -->
+    <pentaho.public.release.repo />
+    <pentaho.public.snapshot.repo />
   </properties>
 
   <dependencies>
@@ -456,14 +458,14 @@
 
   <distributionManagement>
     <repository>
-      <id>pentaho.private.release.repo</id>
-      <name>Pentaho Private Release Repository</name>
-      <url>${pentaho.private.release.repo}</url>
+      <id>pentaho.public.release.repo</id>
+      <name>Pentaho Public Release Repository</name>
+      <url>${pentaho.public.release.repo}</url>
     </repository>
     <snapshotRepository>
-      <id>pentaho.private.snapshot.repo</id>
-      <name>Pentaho Private Snapshot Repository</name>
-      <url>${pentaho.private.snapshot.repo}</url>
+      <id>pentaho.public.snapshot.repo</id>
+      <name>Pentaho Public Snapshot Repository</name>
+      <url>${pentaho.public.snapshot.repo}</url>
     </snapshotRepository>
   </distributionManagement>
 
