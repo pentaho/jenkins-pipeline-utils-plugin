@@ -141,6 +141,7 @@ class CreateJobStep extends Step implements Serializable {
 
       ScmConfig scmConfig = step.scmConfig
       GitHubSCMSource scmSource = new GitHubSCMSource(scmConfig.organization, scmConfig.repository)
+      scmSource.setId(scmConfig.organization + '/' + scmConfig.repository)
       scmSource.setCredentialsId(scmConfig.credentials)
 
       List scmTraits = [
