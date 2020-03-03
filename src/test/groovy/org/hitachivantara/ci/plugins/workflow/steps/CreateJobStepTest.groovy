@@ -14,6 +14,7 @@ import org.hitachivantara.ci.scm.CustomGithubStatusLabelTrait
 import org.jenkinsci.plugins.github_branch_source.BranchDiscoveryTrait
 import org.jenkinsci.plugins.github_branch_source.ForkPullRequestDiscoveryTrait
 import org.jenkinsci.plugins.github_branch_source.GitHubSCMSource
+import org.jenkinsci.plugins.github_branch_source.OriginPullRequestDiscoveryTrait
 import org.jenkinsci.plugins.inlinepipeline.InlineDefinitionBranchProjectFactory
 import org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition
 import org.jenkinsci.plugins.workflow.job.WorkflowJob
@@ -166,10 +167,11 @@ class CreateJobStepTest extends Specification {
 
       GitHubSCMSource scmSource = createdJob.getSCMSources().first()
 
-      scmSource.traits.size() == 4
+      scmSource.traits.size() == 5
       scmSource.traits.any { it instanceof BranchDiscoveryTrait }
       scmSource.traits.any { it instanceof WildcardSCMHeadFilterTrait }
       scmSource.traits.any { it instanceof ForkPullRequestDiscoveryTrait }
+      scmSource.traits.any { it instanceof OriginPullRequestDiscoveryTrait }
       scmSource.traits.any { it instanceof CustomGithubStatusLabelTrait }
 
       CustomGithubStatusLabelTrait notifTrait = scmSource.traits.find { it instanceof CustomGithubStatusLabelTrait }

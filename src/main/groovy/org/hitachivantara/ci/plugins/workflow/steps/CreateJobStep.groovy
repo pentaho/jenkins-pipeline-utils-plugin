@@ -22,6 +22,7 @@ import org.hitachivantara.ci.scm.CustomGithubStatusLabelTrait
 import org.jenkinsci.plugins.github_branch_source.BranchDiscoveryTrait
 import org.jenkinsci.plugins.github_branch_source.ForkPullRequestDiscoveryTrait
 import org.jenkinsci.plugins.github_branch_source.GitHubSCMSource
+import org.jenkinsci.plugins.github_branch_source.OriginPullRequestDiscoveryTrait
 import org.jenkinsci.plugins.inlinepipeline.InlineDefinitionBranchProjectFactory
 import org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition
 import org.jenkinsci.plugins.workflow.job.WorkflowJob
@@ -157,6 +158,8 @@ class CreateJobStep extends Step implements Serializable {
           (scmConfig.prMerge ? [ChangeRequestCheckoutStrategy.MERGE] : [ChangeRequestCheckoutStrategy.HEAD]) as Set,
           new ForkPullRequestDiscoveryTrait.TrustContributors()
         )
+        scmTraits << new OriginPullRequestDiscoveryTrait(
+          (scmConfig.prMerge ? [ChangeRequestCheckoutStrategy.MERGE] : [ChangeRequestCheckoutStrategy.HEAD]) as Set)
       }
 
       if (!scmConfig.prReportStatus) {
