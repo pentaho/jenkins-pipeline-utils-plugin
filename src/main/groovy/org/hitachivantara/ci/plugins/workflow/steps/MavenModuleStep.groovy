@@ -29,7 +29,7 @@ class MavenModuleStep extends Step implements Serializable {
   private final String file
   private List<String> activeProfiles
   private List<String> inactiveProfiles
-  private Properties userProperties
+  private Map userProperties
 
   @DataBoundConstructor
   MavenModuleStep(@Nonnull String file) {
@@ -52,8 +52,8 @@ class MavenModuleStep extends Step implements Serializable {
   }
 
   @DataBoundSetter
-  void setUserProperties(@CheckForNull Properties props) {
-    this.userProperties = props ?: new Properties()
+  void setUserProperties(@CheckForNull Map props) {
+    this.userProperties = props ?: new HashMap()
   }
 
   @Extension

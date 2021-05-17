@@ -24,7 +24,7 @@ class ModelBuilder implements FilePath.FileCallable<Result>, Serializable {
 
   List<String> activeProfiles
   List<String> inactiveProfiles
-  Properties userProperties
+  Map userProperties
 
   Result build(FilePath pom) {
     pom.act(this)
@@ -35,6 +35,11 @@ class ModelBuilder implements FilePath.FileCallable<Result>, Serializable {
     org.apache.maven.model.building.ModelBuilder builder = new DefaultModelBuilderFactory().newInstance()
     ModelBuildingResult result
 
+    Properties userPropertiesClass = new Properties();
+    if(userProperties!=null){
+      userPropertiesClass.putAll(userProperties);
+    }
+
     try {
       DefaultModelBuildingRequest request = new DefaultModelBuildingRequest()
         .setPomFile(pom)
@@ -44,7 +49,7 @@ class ModelBuilder implements FilePath.FileCallable<Result>, Serializable {
         .setValidationLevel(ModelBuildingRequest.VALIDATION_LEVEL_MINIMAL)
         .setActiveProfileIds(activeProfiles)
         .setInactiveProfileIds(inactiveProfiles)
-        .setUserProperties(userProperties)
+        .setUserProperties(userPropertiesClass)
 
       result = builder.build(request)
     } catch (ModelBuildingException e) {

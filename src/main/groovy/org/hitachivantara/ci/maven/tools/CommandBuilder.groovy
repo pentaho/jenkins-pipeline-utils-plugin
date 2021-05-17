@@ -70,8 +70,8 @@ class CommandBuilder implements Serializable {
 
   @SuppressFBWarnings(value = "SE_NO_SERIALVERSIONID")
   @Whitelisted
-  Properties getUserProperties() {
-    Properties props = new Properties()
+  Map getUserProperties() {
+    Map props = new HashMap()
     getOptionsValues(CLIManager.SET_SYSTEM_PROPERTY).each { String property ->
       String name, value
       int i = property.indexOf('=')
@@ -82,7 +82,7 @@ class CommandBuilder implements Serializable {
         name = property.substring(0, i).trim()
         value = property.substring(i + 1).trim()
       }
-      props.setProperty(name, value)
+      props.put(name, value)
     }
     return props
   }

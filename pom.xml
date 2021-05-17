@@ -25,27 +25,28 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <java.level>8</java.level>
 
-    <jenkins.version>2.164.1</jenkins.version>
+    <jenkins.version>2.275</jenkins.version>
     <maven.version>3.6.0</maven.version>
     <gmavenplus-plugin.version>1.6.1</gmavenplus-plugin.version>
     <groovy-all.version>2.5.0</groovy-all.version>
 
     <!-- plugin dependencies -->
-    <workflow-api.version>2.33</workflow-api.version>                               <!-- Pipeline: API -->
-    <workflow-support.version>3.2</workflow-support.version>                        <!-- Pipeline: Supporting APIs -->
-    <workflow-cps.version>2.64</workflow-cps.version>                               <!-- Pipeline: Groovy -->
-    <workflow-cps-global-lib.version>2.13</workflow-cps-global-lib.version>         <!-- Pipeline: Shared Groovy Libraries -->
-    <workflow-step-api.version>2.19</workflow-step-api.version>                     <!-- Pipeline: Step API -->
-    <workflow-job.version>2.31</workflow-job.version>                               <!-- Pipeline: Job -->
-    <workflow-multibranch.version>2.20</workflow-multibranch.version>               <!-- Pipeline: Multibranch -->
-    <scm-api.version>2.2.7</scm-api.version>                                        <!-- SCM API Plugin -->
-    <cloudbees-folder.version>6.3</cloudbees-folder.version>                        <!-- Folders Plugin -->
-    <script-security.version>1.54</script-security.version>                         <!-- Script Security Plugin -->
-    <resource-disposer.version>0.12</resource-disposer.version>                     <!-- Resource Disposer Plugin -->
-    <github-branch-source.version>2.4.1</github-branch-source.version>              <!-- GitHub Branch Source Plugin -->
-    <inline-pipeline.version>1.0</inline-pipeline.version>                          <!-- Multibranch Pipeline Inline Definition Plugin -->
-    <scm-filter-branch-pr.version>0.4</scm-filter-branch-pr.version>                <!-- SCM Filter Branch PR Plugin -->
-    <credentials-binding.version>1.19</credentials-binding.version>                 <!-- Credentials Binding Plugin -->
+    <workflow-api.version>2.41</workflow-api.version>                               <!-- Pipeline: API -->
+    <workflow-support.version>3.8</workflow-support.version>                        <!-- Pipeline: Supporting APIs -->
+    <workflow-cps.version>2.90</workflow-cps.version>                               <!-- Pipeline: Groovy -->
+    <workflow-cps-global-lib.version>2.18</workflow-cps-global-lib.version>         <!-- Pipeline: Shared Groovy Libraries -->
+    <workflow-step-api.version> 2.23</workflow-step-api.version>                     <!-- Pipeline: Step API -->
+    <workflow-job.version>2.40</workflow-job.version>                               <!-- Pipeline: Job -->
+    <workflow-multibranch.version>2.22</workflow-multibranch.version>               <!-- Pipeline: Multibranch -->
+    <workflow-scm-step.version>2.12</workflow-scm-step.version>
+    <scm-api.version>2.6.4</scm-api.version>                                        <!-- SCM API Plugin -->
+    <cloudbees-folder.version>6.15</cloudbees-folder.version>                        <!-- Folders Plugin -->
+    <script-security.version>1.76</script-security.version>                         <!-- Script Security Plugin -->
+    <resource-disposer.version>0.15</resource-disposer.version>                     <!-- Resource Disposer Plugin -->
+    <github-branch-source.version>2.10.2</github-branch-source.version>              <!-- GitHub Branch Source Plugin -->
+    <inline-pipeline.version>1.0.1</inline-pipeline.version>                          <!-- Multibranch Pipeline Inline Definition Plugin -->
+    <scm-filter-branch-pr.version>0.5.1</scm-filter-branch-pr.version>                <!-- SCM Filter Branch PR Plugin -->
+    <credentials-binding.version>1.24</credentials-binding.version>                 <!-- Credentials Binding Plugin -->
 
     <!-- No default repository URL deployments, these must be defined at build-time -->
     <pentaho.public.release.repo />
@@ -99,6 +100,11 @@
       <version>${workflow-multibranch.version}</version>
     </dependency>
     <dependency>
+      <groupId>org.jenkins-ci.plugins.workflow</groupId>
+      <artifactId>workflow-scm-step</artifactId>
+      <version>${workflow-scm-step.version}</version>
+    </dependency>
+    <dependency>
       <groupId>org.jenkins-ci.plugins</groupId>
       <artifactId>github-branch-source</artifactId>
       <version>${github-branch-source.version}</version>
@@ -127,7 +133,37 @@
     <dependency>
       <groupId>org.jenkins-ci.plugins</groupId>
       <artifactId>ssh-credentials</artifactId>
-      <version>1.13</version>
+      <version>1.18.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.jenkins-ci.plugins</groupId>
+      <artifactId>git</artifactId>
+      <version>4.7.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.jenkins-ci.plugins</groupId>
+      <artifactId>structs</artifactId>
+      <version>1.22</version>
+    </dependency>
+    <dependency>
+      <groupId>org.jenkins-ci.plugins</groupId>
+      <artifactId>credentials</artifactId>
+      <version>2.3.15</version>
+    </dependency>
+    <dependency>
+      <groupId>org.jenkins-ci.plugins</groupId>
+      <artifactId>display-url-api</artifactId>
+      <version>2.3.1</version>
+    </dependency>  
+    <dependency>
+      <groupId>org.jenkins-ci.plugins</groupId>
+      <artifactId>trilead-api</artifactId>
+      <version>1.0.13</version>
+    </dependency>  
+    <dependency>
+      <groupId>org.jenkins-ci.plugins</groupId>
+      <artifactId>apache-httpcomponents-client-4-api</artifactId>
+      <version>4.5.10-2.0</version>
     </dependency>
 
     <!-- Enforcer complaints about transitive versions, review whenever updating plugin versions -->
@@ -146,9 +182,25 @@
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
-      <version>1.7.26</version>
+      <version>1.7.30</version>
       <scope>provided</scope>
     </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>log4j-over-slf4j</artifactId>
+      <version>1.7.30</version>
+    </dependency>
+    <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-jdk14</artifactId>
+        <version>1.7.30</version>
+        <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>jcl-over-slf4j</artifactId>
+      <version>1.7.30</version>
+    </dependency>    
 
     <!-- Other Dependencies -->
     <dependency>
@@ -159,7 +211,7 @@
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-lang3</artifactId>
-      <version>3.8.1</version>
+      <version>3.9</version>
     </dependency>
     <dependency>
       <groupId>org.apache.maven</groupId>
@@ -276,24 +328,18 @@
       <artifactId>velocity-engine-core</artifactId>
       <version>2.1</version>
     </dependency>
+    <dependency>
+        <groupId>org.json</groupId>
+        <artifactId>json</artifactId>
+        <version>20190722</version>
+    </dependency>
+
 
     <!-- Test Dependencies -->
     <dependency>
       <groupId>org.jenkins-ci.plugins.workflow</groupId>
       <artifactId>workflow-basic-steps</artifactId>
       <version>2.13</version>
-      <scope>test</scope>
-      <exclusions>
-        <exclusion>
-          <groupId>*</groupId>
-          <artifactId>*</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>org.jenkins-ci.plugins</groupId>
-      <artifactId>apache-httpcomponents-client-4-api</artifactId>
-      <version>4.5.5-3.0</version>
       <scope>test</scope>
       <exclusions>
         <exclusion>
@@ -329,7 +375,7 @@
     <dependency>
       <groupId>org.jenkins-ci.plugins</groupId>
       <artifactId>token-macro</artifactId>
-      <version>1.12.1</version>
+      <version>2.15</version>
       <scope>test</scope>
       <exclusions>
         <exclusion>
@@ -377,7 +423,7 @@
     <repository>
       <id>pentaho-public</id>
       <name>Pentaho Public</name>
-      <url>http://nexus.pentaho.org/content/groups/omni/</url>
+      <url>https://repo.orl.eng.hitachivantara.com/artifactory/pnt-mvn/</url>
       <releases>
         <enabled>true</enabled>
         <updatePolicy>daily</updatePolicy>
