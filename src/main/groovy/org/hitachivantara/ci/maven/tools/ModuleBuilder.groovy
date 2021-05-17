@@ -18,7 +18,7 @@ class ModuleBuilder {
 
   List<String> activeProfiles
   List<String> inactiveProfiles
-  Properties userProperties
+  Map userProperties
   MavenModule parent
 
   @SuppressFBWarnings(value="SE_NO_SERIALVERSIONID")

@@ -25,7 +25,7 @@ class MavenModule implements Serializable {
 
   @Whitelisted List<String> activeProfiles
   @Whitelisted List<String> inactiveProfiles
-  @Whitelisted Properties userProperties
+  @Whitelisted Map userProperties
 
   protected MavenModule(String id, FilePath pom, MavenModule parent = null) {
     this.id = id
