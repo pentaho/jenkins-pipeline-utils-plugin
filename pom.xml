@@ -9,7 +9,7 @@
   </parent>
   <groupId>org.hitachivantara.ci.plugins</groupId>
   <artifactId>pipeline-ci-utility-steps</artifactId>
-  <version>1.26-SNAPSHOT</version>
+  <version>1.25-SNAPSHOT</version>
   <packaging>hpi</packaging>
 
   <name>Hitachi Vantara Pipeline Utility Steps</name>
